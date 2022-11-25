@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import { Product } from "../model/Product";
 
-const ListItem = ({ element }: any) => { 
+const ListItem: React.FC<{element: Product}> = ({ element }) => { 
 
   return (
     <li className='listProduct'>

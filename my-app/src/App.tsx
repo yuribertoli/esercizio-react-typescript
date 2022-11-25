@@ -3,12 +3,13 @@ import React from 'react';
 import Footer from './components/Footer';
 import { useEffect, useState } from "react";
 import Loading from "./components/Loading";
+import { Product } from "./model/Product";
 
-export const UserContext = React.createContext([]);
+export const UserContext = React.createContext([] as Product[]);
 
 const App = () => {
 
-    const [startingArray, setStartingArray] = useState([]);
+    const [startingArray, setStartingArray] = useState<Product[]>([]);
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {

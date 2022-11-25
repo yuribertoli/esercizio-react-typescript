@@ -5,11 +5,15 @@ import Loading from './Loading';
 
 const ProductDetails = () => {
 
-    const { idCode }:any = useParams();
+    const { idCode } = useParams<{idCode: string}>();
+
+    if(!idCode){
+        throw new Error('missing id code')
+    }
 
     const startingArray = React.useContext(UserContext);
 
-    let objectFiltered = startingArray.find(element => parseInt(element['UPC']) === parseInt(idCode))
+    let objectFiltered = startingArray.find(product => parseInt(product['UPC']) === parseInt(idCode)) //con ! significa dichiarare che il valore non può essere null o undefined
 
     if(objectFiltered === null){
         return <Loading/>

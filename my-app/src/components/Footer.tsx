@@ -1,4 +1,4 @@
-const Footer = () => {
+const Footer: React.FC = () => {
     return (
         <ul id="footerList">
             <li><a href="twitter.com">TWITTER</a></li>
