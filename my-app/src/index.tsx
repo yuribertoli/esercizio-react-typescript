@@ -1,19 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Home from './components/Home';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProductDetails from './components/ProductDetails';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default function Index() {
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  return (
+    <BrowserRouter>
+
+      <Routes>
+
+        <Route path="/" element={<App/>}>
+
+          <Route index element={<Home/>} />
+
+          <Route path='/product/:idCode' element={<ProductDetails/>} />
+
+        </Route>
+
+      </Routes>
+
+    </BrowserRouter>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(<Index />);

@@ -1,26 +1,51 @@
+import { Outlet } from "react-router-dom";
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Footer from './components/Footer';
+import { useEffect, useState } from "react";
+import Loading from "./components/Loading";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export const UserContext = React.createContext([]);
+
+const App = () => {
+
+    const [startingArray, setStartingArray] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch('https://assets.fc-dev.instore.oakley.com/assets/products/products.json')
+            .then((response) => {
+                if (response.ok) {
+                    return response.json()
+                }
+                //throw new Error('Something went wrong');
+                return Promise.reject(response); //reject instead of throw Error
+            })
+            .then(json => {
+                setStartingArray(json)
+                setLoading(false)
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }, [])
+
+    if (isLoading) {
+        return <Loading />
+    }
+
+    return (
+        <div id="container">
+
+            <UserContext.Provider value={startingArray}>
+                <Outlet />
+            </UserContext.Provider>
+
+            <footer>
+                <Footer />
+            </footer>
+
+        </div>
+    )
+};
 
 export default App;
