@@ -1,4 +1,10 @@
-const CheckStock = ({checkIfInStock, classToggleLeft, classToggleRight}: any) => {
+import { CheckingStock, SetClassToggle } from "../model/model";
+
+const CheckStock: React.FC<{  checkIfInStock: (value: CheckingStock | null) => void; 
+                              classToggleLeft: SetClassToggle; 
+                              classToggleRight: SetClassToggle; }> 
+    = ({checkIfInStock, classToggleLeft, classToggleRight}) => {
+
     return (
       <div id='checkStock'>
   

@@ -3,8 +3,8 @@ import React, { ChangeEventHandler } from 'react';
 
 const FilterSearch: React.FC<{  filterProducts: ChangeEventHandler<HTMLInputElement>, 
                                 resetSearch: ()=>void, 
-                                valueInput?: string}> = 
-({ filterProducts, resetSearch, valueInput }) => {
+                                valueInput?: string}> 
+    = ({ filterProducts, resetSearch, valueInput }) => {
     return (
         <div className="searchingBar">
             <TextField  value={valueInput || ''} 

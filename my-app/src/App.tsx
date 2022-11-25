@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import React from 'react';
 import Footer from './components/Footer';
 import { useEffect, useState } from "react";
-import Loading from "./components/Loading";
+import Loading from "./components/redirect/Loading";
 import { Product } from "./model/Product";
 
 export const UserContext = React.createContext([] as Product[]);
@@ -10,7 +10,7 @@ export const UserContext = React.createContext([] as Product[]);
 const App = () => {
 
     const [startingArray, setStartingArray] = useState<Product[]>([]);
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         fetch('https://assets.fc-dev.instore.oakley.com/assets/products/products.json')

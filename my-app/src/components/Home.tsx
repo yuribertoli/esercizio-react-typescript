@@ -5,16 +5,17 @@ import FilterSearch from './FilterSearch';
 import ListItem from './ListItem';
 import { UserContext } from '../App';
 import { Product } from '../model/Product';
+import { CheckingStock, SetClassToggle } from '../model/model';
 
 const Home: React.FC = () => {
 
-  const startingArray = React.useContext(UserContext);
+  const startingArray = React.useContext<Product[]>(UserContext);
 
   const [objData, setObjData] = useState([] as Product[]);
   const [valueInput, setValueInput] = useState<string | undefined>();
-  const [toggleData, setToggleData] = useState<number | null>(null);
-  const [classToggleLeft, setClassToggleLeft] = useState('');
-  const [classToggleRight, setClassToggleRight] = useState('');
+  const [toggleData, setToggleData] = useState<CheckingStock | null>(null);
+  const [classToggleLeft, setClassToggleLeft] = useState<SetClassToggle>('');
+  const [classToggleRight, setClassToggleRight] = useState<SetClassToggle>('');
 
   useEffect(() => {
     setObjData(startingArray)
@@ -27,15 +28,15 @@ const Home: React.FC = () => {
 
     switch (toggleData) {
       case 0:
-        setObjData(startingArray.filter((element) => element['availability']['stock'] === 0
-                                        && element['name'].toLowerCase().includes(event.target.value.toLowerCase())));
+        setObjData(startingArray.filter((element) => element.availability.stock === 0
+                                        && element.name.toLowerCase().includes(event.target.value.toLowerCase())));
         break;
       case 1:
-        setObjData(startingArray.filter((element) => element['availability']['stock'] > 0 
-                                        && element['name'].toLowerCase().includes(event.target.value.toLowerCase())))
+        setObjData(startingArray.filter((element) => element.availability.stock > 0 
+                                        && element.name.toLowerCase().includes(event.target.value.toLowerCase())))
         break;
       default:
-        setObjData(startingArray.filter((element) => element['name'].toLowerCase().includes(event.target.value.toLowerCase())));
+        setObjData(startingArray.filter((element) => element.name.toLowerCase().includes(event.target.value.toLowerCase())));
     }
   }
 
@@ -49,7 +50,7 @@ const Home: React.FC = () => {
   }
 
   // Funzione per filtrare i prodotti in base alla loro quantità in stock
-  const checkIfInStock = (value: number | null) => {
+  const checkIfInStock = (value: CheckingStock | null) => {
     if (toggleData === value) {
       setObjData(startingArray);
       setToggleData(null);
@@ -59,13 +60,13 @@ const Home: React.FC = () => {
     } else {
 
       if (value === 1) {
-        setObjData(startingArray.filter(element => element['availability']['stock'] > 0));
+        setObjData(startingArray.filter(element => element.availability.stock > 0));
         setToggleData(1);
         setClassToggleLeft('toggleLabel')
         setClassToggleRight('')
 
       } else if (value === 0) {
-        setObjData(startingArray.filter(element => element['availability']['stock'] === 0));
+        setObjData(startingArray.filter(element => element.availability.stock === 0));
         setToggleData(0);
         setClassToggleRight('toggleLabel')
         setClassToggleLeft('')
