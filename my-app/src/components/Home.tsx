@@ -59,13 +59,15 @@ const Home: React.FC = () => {
     } else {
 
       if (value === 1) {
-        dispatch(setDataFiltered(startingData.filter(element => element.availability.stock > 0)));
+        dispatch(setDataFiltered(startingData.filter(element => element.availability.stock > 0
+                                                     && valueInput !== undefined? element.name.toLowerCase().includes(valueInput.toLowerCase()) : null)));
         dispatch(setToggleData(1));
         dispatch(setClassToggleLeft('toggleLabel'))
         dispatch(setClassToggleRight(''))
 
       } else if (value === 0) {
-        dispatch(setDataFiltered(startingData.filter(element => element.availability.stock === 0)));
+        dispatch(setDataFiltered(startingData.filter(element => element.availability.stock === 0
+                                                     && valueInput !== undefined? element.name.toLowerCase().includes(valueInput.toLowerCase()) : null)));
         dispatch(setToggleData(0));
         dispatch(setClassToggleRight('toggleLabel'))
         dispatch(setClassToggleLeft(''))
