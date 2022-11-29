@@ -10,7 +10,7 @@ export interface dataState {
     startingData: Product[],
     isLoading: boolean,
     dataFiltered: Product[],
-    valueInput: string | undefined,
+    valueInput: string,
     toggleData: CheckingStock | null,
     classToggleLeft: SetClassToggle,
     classToggleRight: SetClassToggle

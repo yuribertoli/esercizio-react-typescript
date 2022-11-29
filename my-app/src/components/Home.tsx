@@ -60,14 +60,14 @@ const Home: React.FC = () => {
 
       if (value === 1) {
         dispatch(dataAction.setDataFiltered(startingData.filter(element => element.availability.stock > 0
-                                                     && valueInput !== undefined? element.name.toLowerCase().includes(valueInput.toLowerCase()) : null)));
+                                                     && element.name.toLowerCase().includes(valueInput.toLowerCase()))));
         dispatch(dataAction.setToggleData(1));
         dispatch(dataAction.setClassToggleLeft('toggleLabel'))
         dispatch(dataAction.setClassToggleRight(''))
 
       } else if (value === 0) {
         dispatch(dataAction.setDataFiltered(startingData.filter(element => element.availability.stock === 0
-                                                     && valueInput !== undefined? element.name.toLowerCase().includes(valueInput.toLowerCase()) : null)));
+                                                     && element.name.toLowerCase().includes(valueInput.toLowerCase()))));
         dispatch(dataAction.setToggleData(0));
         dispatch(dataAction.setClassToggleRight('toggleLabel'))
         dispatch(dataAction.setClassToggleLeft(''))

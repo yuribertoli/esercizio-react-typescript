@@ -7,7 +7,7 @@ const initialState: dataState = {
     startingData: [],
     isLoading: true,
     dataFiltered: [],
-    valueInput: undefined,
+    valueInput: '',
     toggleData: null,
     classToggleLeft: '',
     classToggleRight: ''
@@ -26,7 +26,7 @@ export const dataSlice = createSlice({
         setDataFiltered: (state, action: PayloadAction<Product[]>) => {
             state.dataFiltered = action.payload
         },
-        setValueInput: (state, action: PayloadAction<string | undefined>) => {
+        setValueInput: (state, action: PayloadAction<string>) => {
             state.valueInput = action.payload
         },
         setToggleData: (state, action: PayloadAction<CheckingStock | null>) => {
