@@ -1,16 +1,16 @@
 import { Outlet } from "react-router-dom";
-import React from 'react';
 import Footer from './components/Footer';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Loading from "./components/redirect/Loading";
-import { Product } from "./model/Product";
-
-export const UserContext = React.createContext([] as Product[]);
+//redux:
+import type { RootState } from './redux/store'
+import { useSelector, useDispatch } from 'react-redux'
+import { setStartingData, setLoading } from './redux/createSlice';
 
 const App = () => {
 
-    const [startingArray, setStartingArray] = useState<Product[]>([]);
-    const [isLoading, setLoading] = useState<boolean>(true);
+    const {isLoading} = useSelector((state: RootState) => state.data)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         fetch('https://assets.fc-dev.instore.oakley.com/assets/products/products.json')
@@ -22,8 +22,8 @@ const App = () => {
                 return Promise.reject(response); //reject instead of throw Error
             })
             .then(json => {
-                setStartingArray(json)
-                setLoading(false)
+                dispatch(setStartingData(json))
+                dispatch(setLoading(false))
             })
             .catch((error) => {
                 console.log(error)
@@ -37,9 +37,7 @@ const App = () => {
     return (
         <div id="container">
 
-            <UserContext.Provider value={startingArray}>
-                <Outlet />
-            </UserContext.Provider>
+            <Outlet />
 
             <footer>
                 <Footer />

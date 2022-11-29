@@ -1,75 +1,78 @@
 import '../style/App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import CheckStock from './CheckStock';
 import FilterSearch from './FilterSearch';
 import ListItem from './ListItem';
-import { UserContext } from '../App';
-import { Product } from '../model/Product';
-import { CheckingStock, SetClassToggle } from '../model/model';
+import { CheckingStock } from '../model/model';
+//redux:
+import type { RootState } from '../redux/store'
+import { useSelector, useDispatch } from 'react-redux'
+import { setDataFiltered, setValueInput, setToggleData, setClassToggleLeft, setClassToggleRight } from '../redux/createSlice';
 
 const Home: React.FC = () => {
 
-  const startingArray = React.useContext<Product[]>(UserContext);
+  const dispatch = useDispatch()
 
-  const [objData, setObjData] = useState([] as Product[]);
-  const [valueInput, setValueInput] = useState<string | undefined>();
-  const [toggleData, setToggleData] = useState<CheckingStock | null>(null);
-  const [classToggleLeft, setClassToggleLeft] = useState<SetClassToggle>('');
-  const [classToggleRight, setClassToggleRight] = useState<SetClassToggle>('');
+  const {startingData} = useSelector((state: RootState) => state.data)
+  const {dataFiltered} = useSelector((state: RootState) => state.data)
+  const {valueInput} = useSelector((state: RootState) => state.data)
+  const {toggleData} = useSelector((state: RootState) => state.data)
+  const {classToggleLeft} = useSelector((state: RootState) => state.data)
+  const {classToggleRight} = useSelector((state: RootState) => state.data)
 
   useEffect(() => {
-    setObjData(startingArray)
-  }, [startingArray]);
+    dispatch(setDataFiltered(startingData))
+  }, []);
 
   // Funzione per filtrare i prodotti da mostrare in base all'input dell'utente
   const filterProducts = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 
-    setValueInput(event.target.value);
+    dispatch(setValueInput(event.target.value));
 
     switch (toggleData) {
       case 0:
-        setObjData(startingArray.filter((element) => element.availability.stock === 0
-                                        && element.name.toLowerCase().includes(event.target.value.toLowerCase())));
+        dispatch(setDataFiltered(startingData.filter((element) => element.availability.stock === 0
+                                        && element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
         break;
       case 1:
-        setObjData(startingArray.filter((element) => element.availability.stock > 0 
-                                        && element.name.toLowerCase().includes(event.target.value.toLowerCase())))
+        dispatch(setDataFiltered(startingData.filter((element) => element.availability.stock > 0 
+                                        && element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
         break;
       default:
-        setObjData(startingArray.filter((element) => element.name.toLowerCase().includes(event.target.value.toLowerCase())));
+        dispatch(setDataFiltered(startingData.filter((element) => element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
     }
   }
 
   // Funzione per resettare i valori nell'input di filtraggio e mostrare tutti i prodotti
   const resetSearch = () => {
-    setToggleData(null);
-    setClassToggleLeft('');
-    setClassToggleRight('');
-    setValueInput('');
-    setObjData(startingArray);
+    dispatch(setToggleData(null));
+    dispatch(setClassToggleLeft(''));
+    dispatch(setClassToggleRight(''));
+    dispatch(setValueInput(''));
+    dispatch(setDataFiltered(startingData));
   }
 
   // Funzione per filtrare i prodotti in base alla loro quantità in stock
   const checkIfInStock = (value: CheckingStock | null) => {
     if (toggleData === value) {
-      setObjData(startingArray);
-      setToggleData(null);
-      setClassToggleLeft('');
-      setClassToggleRight('');
+      dispatch(setDataFiltered(startingData));
+      dispatch(setToggleData(null));
+      dispatch(setClassToggleLeft(''));
+      dispatch(setClassToggleRight(''));
 
     } else {
 
       if (value === 1) {
-        setObjData(startingArray.filter(element => element.availability.stock > 0));
-        setToggleData(1);
-        setClassToggleLeft('toggleLabel')
-        setClassToggleRight('')
+        dispatch(setDataFiltered(startingData.filter(element => element.availability.stock > 0)));
+        dispatch(setToggleData(1));
+        dispatch(setClassToggleLeft('toggleLabel'))
+        dispatch(setClassToggleRight(''))
 
       } else if (value === 0) {
-        setObjData(startingArray.filter(element => element.availability.stock === 0));
-        setToggleData(0);
-        setClassToggleRight('toggleLabel')
-        setClassToggleLeft('')
+        dispatch(setDataFiltered(startingData.filter(element => element.availability.stock === 0)));
+        dispatch(setToggleData(0));
+        dispatch(setClassToggleRight('toggleLabel'))
+        dispatch(setClassToggleLeft(''))
       }
     }
   }
@@ -88,9 +91,9 @@ const Home: React.FC = () => {
       </header>
 
       <main>
-        {objData.length === 0 ? <h1>No products found</h1> :
+        {dataFiltered.length === 0 ? <h1>No products found</h1> :
           <ul>
-            {objData.map((element) => {
+            {dataFiltered.map((element) => {
               return <ListItem key={element.UPC} element={element} />
             })}
           </ul>

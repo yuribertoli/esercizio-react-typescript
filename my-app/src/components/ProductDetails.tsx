@@ -1,9 +1,11 @@
 import { useParams, Link } from "react-router-dom";
 import React from 'react';
-import { UserContext } from "../App";
 import Loading from './redirect/Loading';
 import NotFound from "./redirect/NotFound";
 import { Product } from "../model/Product";
+//redux:
+import type { RootState } from '../redux/store'
+import { useSelector } from 'react-redux'
 
 const ProductDetails: React.FC = () => {
 
@@ -15,9 +17,9 @@ const ProductDetails: React.FC = () => {
         throw new Error('missing id code')
     }
 
-    const startingArray = React.useContext<Product[]>(UserContext);
+    const {startingData} = useSelector((state: RootState) => state.data)
 
-    let objectFiltered: DataFiltered = startingArray.find(product => parseInt(product.UPC) === parseInt(idCode)) //mettendo ! subito dopo idCode significa dichiarare che il valore non può essere null o undefined
+    let objectFiltered: DataFiltered = startingData.find(product => parseInt(product.UPC) === parseInt(idCode)) //mettendo ! subito dopo idCode significa dichiarare che il valore non può essere null o undefined
 
     if(objectFiltered === null){
         return <Loading/>
