@@ -13,15 +13,11 @@ const Home: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  const {startingData} = useSelector((state: RootState) => state.data)
-  const {dataFiltered} = useSelector((state: RootState) => state.data)
-  const {valueInput} = useSelector((state: RootState) => state.data)
-  const {toggleData} = useSelector((state: RootState) => state.data)
-  const {classToggleLeft} = useSelector((state: RootState) => state.data)
-  const {classToggleRight} = useSelector((state: RootState) => state.data)
+  const {startingData, dataFiltered, valueInput, toggleData, classToggleLeft, classToggleRight} = useSelector((state: RootState) => state.data)
 
   useEffect(() => {
     dispatch(setDataFiltered(startingData))
+    // eslint-disable-next-line
   }, []);
 
   // Funzione per filtrare i prodotti da mostrare in base all'input dell'utente
@@ -32,11 +28,11 @@ const Home: React.FC = () => {
     switch (toggleData) {
       case 0:
         dispatch(setDataFiltered(startingData.filter((element) => element.availability.stock === 0
-                                        && element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
+                                 && element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
         break;
       case 1:
         dispatch(setDataFiltered(startingData.filter((element) => element.availability.stock > 0 
-                                        && element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
+                                 && element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
         break;
       default:
         dispatch(setDataFiltered(startingData.filter((element) => element.name.toLowerCase().includes(event.target.value.toLowerCase()))))

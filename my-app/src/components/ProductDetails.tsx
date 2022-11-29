@@ -2,14 +2,12 @@ import { useParams, Link } from "react-router-dom";
 import React from 'react';
 import Loading from './redirect/Loading';
 import NotFound from "./redirect/NotFound";
-import { Product } from "../model/Product";
+import { DataFiltered } from "../model/model";
 //redux:
 import type { RootState } from '../redux/store'
 import { useSelector } from 'react-redux'
 
 const ProductDetails: React.FC = () => {
-
-    type DataFiltered = Product | null | undefined;
 
     const { idCode } = useParams<{idCode: string}>();
 
