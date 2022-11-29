@@ -41,6 +41,6 @@ export const dataSlice = createSlice({
     }
 })
 
-export const { setStartingData, setLoading, setDataFiltered, setValueInput, setToggleData, setClassToggleLeft, setClassToggleRight } = dataSlice.actions
+export const dataAction = dataSlice.actions
 
 export default dataSlice.reducer

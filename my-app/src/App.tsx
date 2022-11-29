@@ -5,7 +5,7 @@ import Loading from "./components/redirect/Loading";
 //redux:
 import type { RootState } from './redux/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { setStartingData, setLoading } from './redux/createSlice';
+import { dataAction } from './redux/createSlice';
 
 const App = () => {
 
@@ -22,8 +22,8 @@ const App = () => {
                 return Promise.reject(response); //reject instead of throw Error
             })
             .then(json => {
-                dispatch(setStartingData(json))
-                dispatch(setLoading(false))
+                dispatch(dataAction.setStartingData(json))
+                dispatch(dataAction.setLoading(false))
             })
             .catch((error) => {
                 console.log(error)

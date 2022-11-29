@@ -7,7 +7,7 @@ import { CheckingStock } from '../model/model';
 //redux:
 import type { RootState } from '../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { setDataFiltered, setValueInput, setToggleData, setClassToggleLeft, setClassToggleRight } from '../redux/createSlice';
+import { dataAction } from '../redux/createSlice';
 
 const Home: React.FC = () => {
 
@@ -16,61 +16,61 @@ const Home: React.FC = () => {
   const {startingData, dataFiltered, valueInput, toggleData, classToggleLeft, classToggleRight} = useSelector((state: RootState) => state.data)
 
   useEffect(() => {
-    dispatch(setDataFiltered(startingData))
+    dispatch(dataAction.setDataFiltered(startingData))
     // eslint-disable-next-line
   }, []);
 
   // Funzione per filtrare i prodotti da mostrare in base all'input dell'utente
   const filterProducts = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 
-    dispatch(setValueInput(event.target.value));
+    dispatch(dataAction.setValueInput(event.target.value));
 
     switch (toggleData) {
       case 0:
-        dispatch(setDataFiltered(startingData.filter((element) => element.availability.stock === 0
+        dispatch(dataAction.setDataFiltered(startingData.filter((element) => element.availability.stock === 0
                                  && element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
         break;
       case 1:
-        dispatch(setDataFiltered(startingData.filter((element) => element.availability.stock > 0 
+        dispatch(dataAction.setDataFiltered(startingData.filter((element) => element.availability.stock > 0 
                                  && element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
         break;
       default:
-        dispatch(setDataFiltered(startingData.filter((element) => element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
+        dispatch(dataAction.setDataFiltered(startingData.filter((element) => element.name.toLowerCase().includes(event.target.value.toLowerCase()))))
     }
   }
 
   // Funzione per resettare i valori nell'input di filtraggio e mostrare tutti i prodotti
   const resetSearch = () => {
-    dispatch(setToggleData(null));
-    dispatch(setClassToggleLeft(''));
-    dispatch(setClassToggleRight(''));
-    dispatch(setValueInput(''));
-    dispatch(setDataFiltered(startingData));
+    dispatch(dataAction.setToggleData(null));
+    dispatch(dataAction.setClassToggleLeft(''));
+    dispatch(dataAction.setClassToggleRight(''));
+    dispatch(dataAction.setValueInput(''));
+    dispatch(dataAction.setDataFiltered(startingData));
   }
 
   // Funzione per filtrare i prodotti in base alla loro quantità in stock
   const checkIfInStock = (value: CheckingStock | null) => {
     if (toggleData === value) {
-      dispatch(setDataFiltered(startingData));
-      dispatch(setToggleData(null));
-      dispatch(setClassToggleLeft(''));
-      dispatch(setClassToggleRight(''));
+      dispatch(dataAction.setDataFiltered(startingData));
+      dispatch(dataAction.setToggleData(null));
+      dispatch(dataAction.setClassToggleLeft(''));
+      dispatch(dataAction.setClassToggleRight(''));
 
     } else {
 
       if (value === 1) {
-        dispatch(setDataFiltered(startingData.filter(element => element.availability.stock > 0
+        dispatch(dataAction.setDataFiltered(startingData.filter(element => element.availability.stock > 0
                                                      && valueInput !== undefined? element.name.toLowerCase().includes(valueInput.toLowerCase()) : null)));
-        dispatch(setToggleData(1));
-        dispatch(setClassToggleLeft('toggleLabel'))
-        dispatch(setClassToggleRight(''))
+        dispatch(dataAction.setToggleData(1));
+        dispatch(dataAction.setClassToggleLeft('toggleLabel'))
+        dispatch(dataAction.setClassToggleRight(''))
 
       } else if (value === 0) {
-        dispatch(setDataFiltered(startingData.filter(element => element.availability.stock === 0
+        dispatch(dataAction.setDataFiltered(startingData.filter(element => element.availability.stock === 0
                                                      && valueInput !== undefined? element.name.toLowerCase().includes(valueInput.toLowerCase()) : null)));
-        dispatch(setToggleData(0));
-        dispatch(setClassToggleRight('toggleLabel'))
-        dispatch(setClassToggleLeft(''))
+        dispatch(dataAction.setToggleData(0));
+        dispatch(dataAction.setClassToggleRight('toggleLabel'))
+        dispatch(dataAction.setClassToggleLeft(''))
       }
     }
   }
