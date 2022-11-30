@@ -1,9 +1,11 @@
-import { CheckingStock, SetClassToggle } from "../model/model";
+import { CheckingStock } from "../model/model"
+import { useSelector } from "react-redux"
+import type { RootState } from '../redux/store'
 
-const CheckStock: React.FC<{  checkIfInStock: (value: CheckingStock | null) => void; 
-                              classToggleLeft: SetClassToggle; 
-                              classToggleRight: SetClassToggle; }> 
-    = ({checkIfInStock, classToggleLeft, classToggleRight}) => {
+const CheckStock: React.FC<{ checkIfInStock: (value: CheckingStock | null) => void }> 
+    = ({ checkIfInStock }) => {
+
+    const {classToggleLeft, classToggleRight} = useSelector((state: RootState) => state.data)
 
     return (
       <div id='checkStock'>

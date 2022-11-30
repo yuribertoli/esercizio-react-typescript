@@ -13,7 +13,7 @@ const Home: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  const {startingData, dataFiltered, valueInput, toggleData, classToggleLeft, classToggleRight} = useSelector((state: RootState) => state.data)
+  const {startingData, dataFiltered, valueInput, toggleData} = useSelector((state: RootState) => state.data)
 
   // Funzione per filtrare i prodotti da mostrare in base all'input dell'utente
   const filterProducts = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -77,9 +77,9 @@ const Home: React.FC = () => {
 
         <div id='logo'>150x80</div>
 
-        <CheckStock checkIfInStock={checkIfInStock} classToggleLeft={classToggleLeft} classToggleRight={classToggleRight} />
+        <CheckStock checkIfInStock={checkIfInStock} />
 
-        <FilterSearch filterProducts={filterProducts} resetSearch={resetSearch} valueInput={valueInput} />
+        <FilterSearch filterProducts={filterProducts} resetSearch={resetSearch} />
 
       </header>
 

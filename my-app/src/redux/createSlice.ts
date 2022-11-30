@@ -18,7 +18,11 @@ export const dataSlice = createSlice({
     initialState,
     reducers: {
         setStartingData: (state, action: PayloadAction<Product[]>) => {
-            state.startingData = action.payload
+            if(state.startingData.length === 0){
+                state.startingData = action.payload
+            } else {
+                throw new Error('Initial data cannot be changed')
+            }
         },
         setLoading: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload
