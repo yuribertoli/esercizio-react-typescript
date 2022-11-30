@@ -1,5 +1,5 @@
 import '../style/App.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import CheckStock from './CheckStock';
 import FilterSearch from './FilterSearch';
 import ListItem from './ListItem';
@@ -14,11 +14,6 @@ const Home: React.FC = () => {
   const dispatch = useDispatch()
 
   const {startingData, dataFiltered, valueInput, toggleData, classToggleLeft, classToggleRight} = useSelector((state: RootState) => state.data)
-
-  useEffect(() => {
-    dispatch(dataAction.setDataFiltered(startingData))
-    // eslint-disable-next-line
-  }, []);
 
   // Funzione per filtrare i prodotti da mostrare in base all'input dell'utente
   const filterProducts = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

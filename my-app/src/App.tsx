@@ -23,13 +23,13 @@ const App = () => {
             })
             .then(json => {
                 dispatch(dataAction.setStartingData(json))
+                dispatch(dataAction.setDataFiltered(json))
                 dispatch(dataAction.setLoading(false))
             })
             .catch((error) => {
                 console.log(error)
             });
-            // eslint-disable-next-line
-    }, [])
+    }, [dispatch])
 
     if (isLoading) {
         return <Loading />
