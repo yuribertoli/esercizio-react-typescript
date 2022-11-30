@@ -1,11 +1,11 @@
-import { Outlet } from "react-router-dom";
-import Footer from './components/Footer';
-import { useEffect } from "react";
-import Loading from "./components/redirect/Loading";
+import { Outlet } from "react-router-dom"
+import Footer from './components/Footer'
+import { useEffect } from "react"
+import Loading from "./components/redirect/Loading"
 //redux:
 import type { RootState } from './redux/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { dataAction } from './redux/createSlice';
+import { dataAction } from './redux/createSlice'
 
 const App = () => {
 
@@ -18,8 +18,7 @@ const App = () => {
                 if (response.ok) {
                     return response.json()
                 }
-                //throw new Error('Something went wrong');
-                return Promise.reject(response); //reject instead of throw Error
+                return Promise.reject(response) //reject and return the object response for seeing errors
             })
             .then(json => {
                 dispatch(dataAction.setStartingData(json))
@@ -28,7 +27,7 @@ const App = () => {
             })
             .catch((error) => {
                 console.log(error)
-            });
+            })
     }, [dispatch])
 
     if (isLoading) {
@@ -46,6 +45,6 @@ const App = () => {
 
         </div>
     )
-};
+}
 
-export default App;
+export default App
