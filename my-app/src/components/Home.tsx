@@ -51,7 +51,7 @@ const Home: React.FC = () => {
   // Funzione per filtrare i prodotti in base alla loro quantità in stock
   const checkIfInStock = (value: CheckingStock | null) => {
     if (toggleData === value) {
-      dispatch(dataAction.setDataFiltered(startingData));
+      dispatch(dataAction.setDataFiltered(startingData.filter(el => el.name.toLowerCase().includes(valueInput.toLowerCase()))));
       dispatch(dataAction.setToggleData(null));
       dispatch(dataAction.setClassToggleLeft(''));
       dispatch(dataAction.setClassToggleRight(''));
